@@ -18,7 +18,6 @@ const register = (request,response)=>{
     }).catch(error=>{
         response.status(500).json(error);
     })
-
 }
 
 module.exports = {register}   // register eka wena anaka idan access krnn
