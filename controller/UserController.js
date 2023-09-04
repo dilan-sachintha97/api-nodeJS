@@ -1,5 +1,6 @@
 const UserSchema = require('../model/User');
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
 
 
 const register = (request,response)=>{
@@ -14,9 +15,16 @@ const register = (request,response)=>{
                 });
 
                 dto.save().then(result =>{
+
+                    const token = jwt.sign({
+                                name:result.name,
+                                email:result.email
+                        }, process.env.SECRET_KEY);  // after save create token
+
+
                     let responseUserData = {
                         userEmail:result.email,
-                        token:'****',
+                        token:token,
                         status:201,
                         message:'success'
                     }
