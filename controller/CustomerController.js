@@ -39,9 +39,9 @@ const updateCustomer = (req,resp)=>{
     })
 }
 const deleteCustomer = (req,resp)=>{
-    CustomerSchema.findOneAndUpdate({'_id':req.headers.id, $set:{name:req.body.name, address:req.body.address, contact:req.body.contact, salary:req.body.salary}}).then(result=>{
+    CustomerSchema.findOneAndDelete({'_id':req.headers.id}).then(result=>{
         if(result.nModified > 0){
-            // if find and update user
+            // if find and delete user
             resp.status(201).json(result);
         }else{
             resp.status(500).json({'message':'Something went wrong'});
@@ -50,6 +50,12 @@ const deleteCustomer = (req,resp)=>{
         resp.status(500).json(err);
     })
 }
-const findAllCustomers = (req,resp)=>{}
+const findAllCustomers = (req,resp)=>{
+    CustomerSchema.find().then(result=>{
+            resp.status(200).json(result);
+    }).catch(err=>{
+        resp.status(500).json(err);
+    })
+}
 
 module.exports= {saveCustomer,findCustomer,updateCustomer,deleteCustomer,findAllCustomers}
