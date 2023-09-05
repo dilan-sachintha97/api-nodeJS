@@ -28,7 +28,8 @@ const findCustomer = (req,resp)=>{
 }
 const updateCustomer = (req,resp)=>{
     CustomerSchema.findOneAndUpdate({'_id':req.headers.id, $set:{name:req.body.name, address:req.body.address, contact:req.body.contact, salary:req.body.salary}}).then(result=>{
-        if(result.nModified > 0){
+        console.log(result)
+        if(result.modifiedCount > 0){
             // if find and update user
             resp.status(201).json(result);
         }else{
@@ -38,18 +39,20 @@ const updateCustomer = (req,resp)=>{
         resp.status(500).json(err);
     })
 }
-const deleteCustomer = (req,resp)=>{
-    CustomerSchema.findOneAndDelete({'_id':req.headers.id}).then(result=>{
-        if(result.nModified > 0){
-            // if find and delete user
-            resp.status(201).json(result);
-        }else{
-            resp.status(500).json({'message':'Something went wrong'});
-        }
-    }).catch(err=>{
-        resp.status(500).json(err);
-    })
-}
+const deleteCustomer = (req, resp) => {
+    CustomerSchema.findOneAndDelete({ '_id': req.headers.id })
+        .then((result) => {
+            if (result !== null) {
+                // if find and delete user
+                resp.status(200).json(result);
+            } else {
+                resp.status(404).json({ 'message': 'User not found' });
+            }
+        })
+        .catch((err) => {
+            resp.status(500).json(err);
+        });
+};
 const findAllCustomers = (req,resp)=>{
     CustomerSchema.find().then(result=>{
             resp.status(200).json(result);

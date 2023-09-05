@@ -6,4 +6,4 @@ const CustomerSchema = new mongoose.Schema({
     salary:{type:Number, required:true},
 })
 
-module.exports = mongoose.model('Customer','CustomerSchema')   // to access from controller
+module.exports = mongoose.model('Customer',CustomerSchema)   // to access from controller
