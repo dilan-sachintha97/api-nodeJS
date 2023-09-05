@@ -1,44 +1,41 @@
-/*
-    express - >   (npm i express)
-    nodemon-> (npm i nodemon -g)
-    mongodb - >   connect [mongoose  (npm i mongoose)]
-    run -> node index,js
-*/
-
-const express = require('express'); // Import express
-const  mongoose = require('mongoose'); // Import mongo db
+const express = require('express');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
-const bodyParser = require('body-parser')   // to allow request
+const bodyParser = require('body-parser');
 
-
-
-mongoose.set('strictQuery',true)
-//==========================
- const UserRoute = require('./routes/UserRoute');
- const CustomerRoute = require('./routes/CustomerRoute');
-
-//==========================
+// Set up express app
 const app = express();
-const serverPort = process.env.SERVER_PORT;
+const serverPort = process.env.SERVER_PORT || 3000;
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+// Middleware to parse request bodies
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-// parse application/json
-app.use(bodyParser.json())
-
-mongoose.connect('mongodb://localhost:27017/pos').then(()=>{
-        app.listen(serverPort, () => {
-            console.log(`Server Running on Port ${serverPort}`);
-        });
+// Connect to MongoDB Atlas using the connection string from .env
+mongoose.connect(process.env.MONGO_DB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
-//======================
- app.use('/api/v1/user',UserRoute)
- app.use('/api/v1/customer',CustomerRoute)
-//======================
+.then(() => {
+  
+  app.listen(serverPort, () => {
+    console.log(`Server Running on Port ${serverPort}`);
+  });
 
-app.get('/api/v1/test', (req, res) => {
-    res.status(200).json({'message': 'success!'});
+})
+.catch((err) => {
+  console.error('Error connecting to MongoDB:', err);
 });
 
+// Import and use your routes (UserRoute, CustomerRoute)
+const UserRoute = require('./routes/UserRoute');
+const CustomerRoute = require('./routes/CustomerRoute');
+
+app.use('/api/v1/user', UserRoute);
+app.use('/api/v1/customer', CustomerRoute);
+
+// Test endpoint
+app.get('/api/v1/test', (req, res) => {
+  res.status(200).json({ 'message': 'success!' });
+});
