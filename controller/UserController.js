@@ -77,4 +77,7 @@ const login = (request, response) => {
     })
 }
 
-module.exports = {register,login}   // register eka wena anaka idan access krnn
+
+module.exports = { register, login} // register eka wena anaka idan access krnn
+
+  

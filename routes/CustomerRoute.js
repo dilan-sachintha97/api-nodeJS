@@ -1,7 +1,8 @@
 const express = require('express');
 const UserController = require('../controller/CustomerController');
-
 const router = express.Router();
+
+//  here not included protected router
 router.post('/save', UserController.saveCustomer)
 router.get('/find', UserController.findCustomer)
 router.delete('/delete', UserController.deleteCustomer)
