@@ -5,4 +5,4 @@ const UserSchema = new mongoose.Schema({
     password:{type:String, required:true},
 })
 
-module.exports = mongoose.model('User',UserSchema)   // to access wenaanaka idan
+module.exports = mongoose.model('User',UserSchema)   // to access from controller

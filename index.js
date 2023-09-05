@@ -16,6 +16,7 @@ const bodyParser = require('body-parser')   // to allow request
 mongoose.set('strictQuery',true)
 //==========================
  const UserRoute = require('./routes/UserRoute');
+ const CustomerRoute = require('./routes/CustomerRoute');
 
 //==========================
 const app = express();
@@ -34,6 +35,7 @@ mongoose.connect('mongodb://localhost:27017/pos').then(()=>{
 })
 //======================
  app.use('/api/v1/user',UserRoute)
+ app.use('/api/v1/customer',CustomerRoute)
 //======================
 
 app.get('/api/v1/test', (req, res) => {
