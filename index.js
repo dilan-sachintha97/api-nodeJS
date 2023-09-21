@@ -15,8 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Connect to MongoDB Atlas using the connection string from .env
-mongoose
-  .connect(process.env.MONGO_DB, {
+mongoose.connect(process.env.MONGO_DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

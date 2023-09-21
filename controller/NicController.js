@@ -14,6 +14,7 @@ const convertNIC = (req, res) => {
         year = parseInt(nicNumber.substr(0, 4));
         days = parseInt(nicNumber.substr(4, 3));
         genderCode = parseInt(nicNumber.charAt(9));
+        console.log(days);
     } else if (nicNumber.length === 10) {
         // Old NIC format 
         year = parseInt(nicNumber.substr(0, 2));
@@ -38,8 +39,19 @@ const convertNIC = (req, res) => {
         year += 2000;
     }
 
-    const birthDate = new Date(year, 0, days);
-    const birthday = birthDate.toISOString().slice(0, 10);
+    const birthDate = new Date(1996, 0, days);
+   
+
+    const month  = birthDate.getMonth();
+
+    const day  = birthDate.getDate();
+
+    // const birthday = birthDate.toISOString().slice(0, 10);
+    const birthday = year.toString() +"/"+(month+1).toString()+"/"+day.toString();
+
+    // console.log(month+1);
+    // console.log(day);
+    // console.log(year);
 
     res.status(200).json({ birthday, gender });
 };

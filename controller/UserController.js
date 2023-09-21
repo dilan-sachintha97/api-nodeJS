@@ -1,7 +1,6 @@
 const UserSchema = require('../model/User');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-const {request, response} = require("express");
 
 
 const register = (request,response)=>{

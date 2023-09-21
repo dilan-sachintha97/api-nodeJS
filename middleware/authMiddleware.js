@@ -16,6 +16,7 @@ exports.authenticateToken = (req, res, next) => {
       return res.status(401).json({ message: 'Authentication failed' });
      
     }
+    
     req.user = decodedToken;
     next();
   });
